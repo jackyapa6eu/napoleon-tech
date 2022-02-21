@@ -1,14 +1,48 @@
-import {useCallback, useEffect} from "react";
-import {child, get, getDatabase, ref, set, push, onValue, DataSnapshot} from "firebase/database";
-import { getStorage, ref as storeRef, uploadBytes, getDownloadURL } from "firebase/storage";
-import { login, setAuthZModalVariant, setLoading} from "../store/slices/authZ/authZSlice";
-import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword} from "firebase/auth";
-import {useAppDispatch} from "./useAppDispatch";
-import { Recipe } from "../types/recipeType";
-import { setRecipes, addRecipe } from "../store/slices/recipes/recipesSlice";
+import { useCallback, useEffect } from 'react';
+import {
+  child,
+  get,
+  getDatabase,
+  ref,
+  set,
+  push,
+  onValue,
+  DataSnapshot,
+} from 'firebase/database';
+import {
+  getStorage,
+  ref as storeRef,
+  uploadBytes,
+  getDownloadURL,
+} from 'firebase/storage';
+import {
+  login,
+  setAuthZModalVariant,
+  setLoading,
+} from '../store/slices/authZ/authZSlice';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import { useAppDispatch } from './useAppDispatch';
+import { Recipe } from '../types/recipeType';
+import { setRecipes, addRecipe } from '../store/slices/recipes/recipesSlice';
 
-type WriteUserData = (userId: string, firstName: string, lastName: string, email: string | null, profile_picture: string) => void;
-type CreateUser = (email: string, password: string, firstName: string, lastName: string) => void;
+type WriteUserData = (
+  userId: string,
+  firstName: string,
+  lastName: string,
+  email: string | null,
+  profile_picture: string
+) => void;
+type CreateUser = (
+  email: string,
+  password: string,
+  firstName: string,
+  lastName: string
+) => void;
 type GetUserData = (userId: string) => void;
 type UserLogin = (email: string, password: string) => void;
 type CreateRecipe = (recipe: Recipe) => Promise<string | null>;
@@ -22,29 +56,31 @@ export const useFirebase = () => {
   useEffect(() => {
     console.log('useEffect in getterUserData');
     //getUserData('vvfiRH3KHeZPQF5ByPbBCDw0D783');
-  }, [])
+  }, []);
 
-  const listenUser = useCallback( // подписываемся на юзера, если залогинены, то грузим его данные и кладем в стор.
+  const listenUser = useCallback(
+    // подписываемся на юзера, если залогинены, то грузим его данные и кладем в стор.
     () => {
-      dispatch(setLoading(true))
+      dispatch(setLoading(true));
       onAuthStateChanged(auth, (user) => {
         if (user) {
           getUserData(user.uid);
         } else {
           console.log('signed out');
-          dispatch(setLoading(false))
+          dispatch(setLoading(false));
         }
       });
-    }, []
-  )
+    },
+    []
+  );
 
-  const getUserData: GetUserData = useCallback(
-    (userId) => {
-      const dbRef = ref(getDatabase());
-      get(child(dbRef, `users/${userId}`)).then((snapshot) => {
+  const getUserData: GetUserData = useCallback((userId) => {
+    const dbRef = ref(getDatabase());
+    get(child(dbRef, `users/${userId}`))
+      .then((snapshot) => {
         if (snapshot.exists()) {
           const userData = snapshot.val();
-          dispatch(login(userData))
+          dispatch(login(userData));
         } else {
           console.log('error');
           throw new Error('User data not found');
@@ -54,14 +90,13 @@ export const useFirebase = () => {
         console.error(error);
       })
       .finally(() => {
-        dispatch(setLoading(false))
-      })
-    }, []
-  )
+        dispatch(setLoading(false));
+      });
+  }, []);
 
-  const createUser:CreateUser = useCallback(
+  const createUser: CreateUser = useCallback(
     (email, password, firstName, lastName) => {
-      dispatch(setLoading(true))
+      dispatch(setLoading(true));
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user; // созданный юзер
@@ -79,19 +114,14 @@ export const useFirebase = () => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorMessage, errorCode);
-          dispatch(setLoading(false))
+          dispatch(setLoading(false));
         });
-    }, []
-  )
+    },
+    []
+  );
 
-  const writeUserData:WriteUserData = useCallback(
-    (
-      userId,
-      firstName,
-      lastName,
-      email,
-      profile_picture
-    ) => {
+  const writeUserData: WriteUserData = useCallback(
+    (userId, firstName, lastName, email, profile_picture) => {
       const db = getDatabase();
       set(ref(db, 'users/' + userId), {
         id: userId,
@@ -99,78 +129,77 @@ export const useFirebase = () => {
         email,
         lastName,
         profile_picture,
-      })
-      .then(() => {
-        console.log('success!')
+      }).then(() => {
+        console.log('success!');
         dispatch(setAuthZModalVariant());
+      });
+    },
+    []
+  );
+
+  const loginUser: UserLogin = useCallback((email, password) => {
+    dispatch(setLoading(true));
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        if (!user) {
+          throw new Error('User not found');
+        }
+        //getUserData(user.uid);
       })
-    }, []
-  )
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage, errorCode);
+        dispatch(setLoading(false));
+      });
+  }, []);
 
-  const loginUser:UserLogin = useCallback(
-    (email, password) => {
-      dispatch(setLoading(true))
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          if (!user) {
-            throw new Error('User not found')
-          }
-          //getUserData(user.uid);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorMessage, errorCode);
-          dispatch(setLoading(false))
-        });
-    }, []
-  )
-
-  const createRecipe:CreateRecipe = useCallback((recipe) => {
+  const createRecipe: CreateRecipe = useCallback((recipe) => {
     const db = getDatabase();
     const recipeId = push(child(ref(db), 'recipes/')).key;
-    return set(ref(db, 'recipes/' + recipeId), {...recipe, id: recipeId}).then(() => recipeId)
-    }, []
-  )
+    return set(ref(db, 'recipes/' + recipeId), {
+      ...recipe,
+      id: recipeId,
+    }).then(() => recipeId);
+  }, []);
 
   const getRecipeById = (id: string): Promise<void> => {
     const dbRef = ref(getDatabase());
     return get(child(dbRef, `recipes/${id}`))
-    .then((snapshot) => {
+      .then((snapshot) => {
         if (snapshot.exists()) {
-            const result = snapshot.val(); // пришедший объект
-            dispatch(addRecipe(result))
+          const result = snapshot.val(); // пришедший объект
+          dispatch(addRecipe(result));
         } else {
-            console.log("No data available");
-            //
+          console.log('No data available');
+          //
         }
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         console.error(error);
-    });
-  }
+      });
+  };
 
-  const uploadFile:UploadFile = useCallback((fileObject) => {
+  const uploadFile: UploadFile = useCallback((fileObject) => {
     const storage = getStorage();
     const storageRef = storeRef(storage, fileObject.name);
-    return uploadBytes(storageRef, fileObject).then((snapshot) => getDownloadURL(snapshot.ref));
-    }, []
-  )
+    return uploadBytes(storageRef, fileObject).then((snapshot) =>
+      getDownloadURL(snapshot.ref)
+    );
+  }, []);
 
-  const getRecipes = useCallback(
-    () => {
-      onValue(recipesRef, (snapshot) => {
-        const recipes = snapshot.val();
-        const recipesArr: Array<Recipe> = [];
-        const keysArr = Object.keys(recipes);
-        keysArr.forEach((recipeKey) => {
-          recipesArr.push(recipes[recipeKey]);
-        })
-        dispatch(setRecipes(recipesArr));
+  const getRecipes = useCallback(() => {
+    onValue(recipesRef, (snapshot) => {
+      const recipes = snapshot.val();
+      const recipesArr: Array<Recipe> = [];
+      const keysArr = Object.keys(recipes);
+      keysArr.forEach((recipeKey) => {
+        recipesArr.push(recipes[recipeKey]);
       });
-    }, []
-  )
+      dispatch(setRecipes(recipesArr));
+    });
+  }, []);
 
   return {
     getterUser: getUserData,
@@ -182,5 +211,5 @@ export const useFirebase = () => {
     uploadFile,
     getRecipes,
     getRecipeById,
-  }
-}
+  };
+};

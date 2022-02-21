@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,12 +9,16 @@ import Chip from '@mui/material/Chip';
 import { tagList } from '../../../utils/dictionary';
 
 interface CreateTagsProps {
-  tags: string[],
-  handleChange: (event: SelectChangeEvent<string[]>) => void,
-  isEditForm: boolean
+  tags: string[];
+  handleChange: (event: SelectChangeEvent<string[]>) => void;
+  isEditForm: boolean;
 }
 
-export const CreateTags = ({ tags, handleChange, isEditForm }: CreateTagsProps) => {
+export const CreateTags = ({
+  tags,
+  handleChange,
+  isEditForm,
+}: CreateTagsProps) => {
   return (
     <Box>
       <FormControl fullWidth>
@@ -37,10 +41,7 @@ export const CreateTags = ({ tags, handleChange, isEditForm }: CreateTagsProps) 
           )}
         >
           {Object.keys(tagList).map((key) => (
-            <MenuItem
-              key={key}
-              value={key}
-            >
+            <MenuItem key={key} value={key}>
               {tagList[key]}
             </MenuItem>
           ))}
@@ -48,4 +49,4 @@ export const CreateTags = ({ tags, handleChange, isEditForm }: CreateTagsProps) 
       </FormControl>
     </Box>
   );
-}
+};

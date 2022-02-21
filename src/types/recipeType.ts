@@ -1,39 +1,39 @@
 import { user } from './authZTypes';
 
 export interface RecipeIngredient {
-  name: string,
-  unit: string,
-  count: number
+  name: string;
+  unit: string;
+  count: number;
 }
 
-export interface RecipeInstruction  {
-  title: string,
-  text: string,
-  imgURL?: string
+export interface RecipeInstruction {
+  title: string;
+  text: string;
+  imgURL?: string;
 }
 
 export interface Recipe {
-  id: string,
-  type: string
-  title: string,
-  description: string,
-  owner: user,
-  date: number,
-  duration: number,
-  diameter: number,
-  imgUrl: string,
-  tags: string[],
-  ingredients: RecipeIngredient[],
-  recipeText: RecipeInstruction[]
+  id: string;
+  type: string;
+  title: string;
+  description: string;
+  owner: user;
+  date: number;
+  duration: number;
+  diameter: number;
+  imgUrl: string;
+  tags: string[];
+  ingredients: RecipeIngredient[];
+  recipeText: RecipeInstruction[];
 }
 
 export interface RecipesStatus {
-  loadedAll: boolean,
-  loading: boolean,
-  error: string | null,
+  loadedAll: boolean;
+  loading: boolean;
+  error: string | null;
 }
 
 export interface RecipesTypes {
-  status: RecipesStatus
-  recipes: Recipe[]
+  status: RecipesStatus;
+  recipes: Recipe[];
 }

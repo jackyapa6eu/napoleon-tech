@@ -4,5 +4,5 @@ export const routes = {
   signIn: '/sign-in',
   createRecipe: '/create-recipe',
   recipe: '/recipes',
-  recipeBuilder: '/recipe-builder'
-}
+  recipeBuilder: '/recipe-builder',
+};
