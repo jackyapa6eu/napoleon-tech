@@ -37,6 +37,11 @@ npm install
 npm start
 ```  
 
+## Сборка
+```
+npm run build
+```  
+
 ## Статус проекта: `завершен`
 
 ## [Ссылка на сайт](https://napoleon-tech.web.app/)
