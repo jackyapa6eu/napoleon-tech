@@ -1,37 +1,46 @@
-## Финальный проект frontend-стажировки в СберМаркет
+# Финальный проект frontend-стажировки в СберМаркет
 
-:dart: **Цель** – реализовать MVP, используя знания, полученные во время стажировки.
+## Описание 
 
-:alarm_clock: **Срок** – две недели
+Кулинарная книга для кондитеров и любителей выпечки
 
-:fist: **Команда:**
-+ [Антон Абрамов](https://github.com/Chippsi)
-+ [Татьяна Кузнецова](https://github.com/vaideska)
----
-### :birthday: Napoleon tech - это удобная кулинарная книга для кондитеров и любителей выпечки
-
-#### :ok_hand: **MVP:**
 + Логин/Регистрация
 + Лента рецептов
 + Карточка рецепта с калькулятором пересчета кол-ва ингредиентов
 + Добавление/Редактирование/Удаление рецепта
 + Версия рецепта для печати
-
-#### :metal: **OVER MVP:**
 + Конструктор рецептов - позволяет собрать несколько подрецептов в удобочитаемый формат. Тем самым дает возможность кондитерам эксперементировать и создавать уникальную продукцию. 
 + Фильтрация рецептов по тегам
 
-#### :wrench: **STACK:**
-+ React
-+ Redux-Toolkit
-+ TypeScript
-+ react-router-dom
-+ react-hook-form
-+ Material UI
-+ Firebase
-+ swiper
-+ yup
-+ and more...
+## Технологии
+
+- React
+- Redux-Toolkit
+- TypeScript
+- react-router-dom
+- react-hook-form
+- Material UI
+- Firebase
+- swiper
+- yup
+- and more...
+
+## Сборка
+- `git clone https://github.com/jackyapa6eu/napoleon-tech.git`  
+- `cd napoleon-tech`  
+- `npm install`  
+
+## Статус проекта: завершен
+
+## [Ссылка на Github Pages](https://napoleon-tech.web.app/)
+
+
+
+---
+
+:fist: **Команда:**
++ [Антон Абрамов](https://github.com/Chippsi)
++ [Татьяна Кузнецова](https://github.com/vaideska)
 
 ### :trophy: **Достижения**
 + Цель прокта была достигнута, MVP реализован
