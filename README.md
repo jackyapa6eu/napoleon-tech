@@ -30,9 +30,12 @@
 - `cd napoleon-tech`  
 - `npm install`  
 
+## Запуск
+- `npm start`  
+
 ## Статус проекта: завершен
 
-## [Ссылка на Github Pages](https://napoleon-tech.web.app/)
+## [Ссылка на сайт](https://napoleon-tech.web.app/)
 
 
 
