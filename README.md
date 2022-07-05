@@ -26,18 +26,20 @@
 - and more...
 
 ## Сборка
-- `git clone https://github.com/jackyapa6eu/napoleon-tech.git`  
-- `cd napoleon-tech`  
-- `npm install`  
+```
+git clone https://github.com/jackyapa6eu/napoleon-tech.git  
+cd napoleon-tech  
+npm install  
+```
 
 ## Запуск
-- `npm start`  
+```
+npm start
+```  
 
-## Статус проекта: завершен
+## Статус проекта: `завершен`
 
 ## [Ссылка на сайт](https://napoleon-tech.web.app/)
-
-
 
 ---
 
