@@ -25,7 +25,7 @@
 - yup
 - and more...
 
-## Сборка
+## Установка проекта
 ```
 git clone https://github.com/jackyapa6eu/napoleon-tech.git  
 cd napoleon-tech  
