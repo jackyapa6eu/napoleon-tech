@@ -39,6 +39,7 @@
 ---
 
 :fist: **Команда:**
++ [Евгений Денисов](https://github.com/jackyapa6eu)
 + [Антон Абрамов](https://github.com/Chippsi)
 + [Татьяна Кузнецова](https://github.com/vaideska)
 
